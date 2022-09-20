@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
         margin: 10,
         fontSize: 20,
         textAlign: "center",
+        fontFamily: "Roboto-Regular",
     },
     quoteTexts: {
         color: colors.neutral30,
@@ -41,11 +42,11 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         fontSize: 28,
         textAlign: "center",
-        fontStyle: "italic",
-        textDecorationColor: colors.neutral80,
+        fontFamily: "Roboto-Medium",
     },
     quoteAuthor: {
         color: colors.neutral30,
+        fontFamily: "Roboto-Regular",
         fontSize: 28,
         textAlign: "center",
     },

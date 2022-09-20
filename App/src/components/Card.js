@@ -39,6 +39,7 @@ const styles = (props) =>
         },
         text: {
             color: colors.neutral30,
+            fontFamily: "Roboto-Regular",
             textAlignVertical: "center",
             textAlign: "center",
             fontSize: 24,

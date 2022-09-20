@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StatusBar } from "expo-status-bar";
+import { useFonts } from "expo-font";
 
 import colors from "./App/src/constants/colors";
 import HomeScreen from "./App/src/screens/HomeScreen";
@@ -15,6 +16,23 @@ import Icon from "./App/src/constants/icons";
 export default function App() {
     const Tab = createBottomTabNavigator();
     let iconSize = 20;
+    const [fontsLoaded] = useFonts({
+        "Roboto-Regular": require("./App/assets/Fonts/Roboto-Regular.ttf"),
+        "Roboto-Italic": require("./App/assets/Fonts/Roboto-Italic.ttf"),
+        "Roboto-BlackItalic": require("./App/assets/Fonts/Roboto-BlackItalic.ttf"),
+        "Roboto-Black": require("./App/assets/Fonts/Roboto-Black.ttf"),
+        "Roboto-BoldItalic": require("./App/assets/Fonts/Roboto-BoldItalic.ttf"),
+        "Roboto-Light": require("./App/assets/Fonts/Roboto-Light.ttf"),
+        "Roboto-LightItalic": require("./App/assets/Fonts/Roboto-LightItalic.ttf"),
+        "Roboto-Medium": require("./App/assets/Fonts/Roboto-Medium.ttf"),
+        "Roboto-MediumItalic": require("./App/assets/Fonts/Roboto-MediumItalic.ttf"),
+        "Roboto-Thin": require("./App/assets/Fonts/Roboto-Thin.ttf"),
+        "Roboto-ThinItalic": require("./App/assets/Fonts/Roboto-ThinItalic.ttf"),
+        "Roboto-Bold": require("./App/assets/Fonts/Roboto-Bold.ttf"),
+    });
+    if (!fontsLoaded) {
+        return null;
+    }
 
     return (
         <NavigationContainer>
@@ -115,11 +133,11 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-    // screens: { marginBottom: props.tabBarHeight },
     label: {
         fontSize: 14,
         fontWeight: "500",
         textAlign: "center",
+        fontFamily: "Roboto-Regular",
     },
     tabBar: {
         backgroundColor: colors.white,

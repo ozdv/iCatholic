@@ -24,13 +24,13 @@ export default function MoreScreen() {
             <View style={styles.container}>
                 <Text style={styles.header}>Window Dimensions</Text>
                 {Object.entries(dimensions.window).map(([key, value]) => (
-                    <Text>
+                    <Text key={key}>
                         {key} - {value}
                     </Text>
                 ))}
                 <Text style={styles.header}>Screen Dimensions</Text>
                 {Object.entries(dimensions.screen).map(([key, value]) => (
-                    <Text>
+                    <Text key={key}>
                         {key} - {value}
                     </Text>
                 ))}
