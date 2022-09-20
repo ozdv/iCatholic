@@ -11,4 +11,5 @@ export default {
     neutral40: "#515e7e",
     neutral30: "#394665",
     neutral20: "#21304d",
+    blue400: "#4eb6ef",
 };
