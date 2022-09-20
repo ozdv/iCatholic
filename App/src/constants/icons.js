@@ -53,8 +53,6 @@ const getIconFont = (type) => {
 
 const Icon = ({ type, ...props }) => {
     const FontIcon = getIconFont(type);
-    console.log("props", props);
-
     return <FontIcon {...props} />;
 };
 

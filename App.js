@@ -109,13 +109,13 @@ export default function App() {
                     }}
                 />
             </Tab.Navigator>
-
             <StatusBar style="auto" />
         </NavigationContainer>
     );
 }
 
 const styles = StyleSheet.create({
+    // screens: { marginBottom: props.tabBarHeight },
     label: {
         fontSize: 14,
         fontWeight: "500",
@@ -123,6 +123,8 @@ const styles = StyleSheet.create({
     },
     tabBar: {
         backgroundColor: colors.white,
-        position: "absolute",
+        shadowRadius: 8,
+        shadowOpacity: 0.2,
+        shadowColor: colors.neutral40,
     },
 });
