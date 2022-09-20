@@ -1,11 +1,15 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import colors from "../constants/colors";
 
-export default function Card(props) {
-    const { height, width, color, text, onClick } = props;
+export default function Button(props) {
+    const { height, width, disabled, color, text, onPress } = props;
     return (
-        <View style={styles(props).Card}>
+        <TouchableOpacity
+            style={styles(props).Button}
+            onPress={onPress}
+            activeOpacity={0.6}
+        >
             <Text
                 adjustsFontSizeToFit={true}
                 numberOfLines={1}
@@ -13,14 +17,13 @@ export default function Card(props) {
             >
                 {text}
             </Text>
-        </View>
+        </TouchableOpacity>
     );
 }
 
 const styles = (props) =>
     StyleSheet.create({
-        Card: {
-            alignItems: "stretch",
+        Button: {
             flex: 1,
             justifyContent: "center",
             marginTop: 20,

@@ -5,13 +5,14 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 
-import colors from "./App/src/constants/colors";
-import HomeScreen from "./App/src/screens/HomeScreen";
-import PrayersScreen from "./App/src/screens/PrayersScreen";
-import MoreScreen from "./App/src/screens/MoreScreen";
-import BibleScreen from "./App/src/screens/BibleScreen";
-import MassScreen from "./App/src/screens/MassScreen";
-import Icon from "./App/src/constants/icons";
+import { colors, Icon } from "./App/src/constants";
+import {
+    HomeScreen,
+    PrayersScreen,
+    MoreScreen,
+    BibleScreen,
+    MassScreen,
+} from "./App/src/screens";
 
 export default function App() {
     const Tab = createBottomTabNavigator();

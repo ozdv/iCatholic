@@ -1,8 +1,14 @@
 import React from "react";
-import { StyleSheet, Text, SafeAreaView, View, ScrollView } from "react-native";
-import Card from "../components/Card";
-import colors from "../constants/colors";
-import UserLogo from "../components/UserLogo";
+import {
+    StyleSheet,
+    Text,
+    SafeAreaView,
+    View,
+    ScrollView,
+    Alert,
+} from "react-native";
+import { Button, UserLogo } from "../components";
+import { colors } from "../constants";
 
 export default function HomeScreen() {
     return (
@@ -14,8 +20,14 @@ export default function HomeScreen() {
                     "The worst prison would be a closed heart."
                 </Text>
                 <Text style={styles.quoteAuthor}>- St. John Paul II</Text>
-                <Card text={"Daily Mass Readings"} />
-                <Card text={"Examination of Conscience"} />
+                <Button
+                    text={"Daily Mass Readings"}
+                    onPress={() => Alert.alert("pressed!")}
+                />
+                <Button
+                    text={"Examination of Conscience"}
+                    onPress={() => Alert.alert("pressed!")}
+                />
             </SafeAreaView>
         </ScrollView>
     );
