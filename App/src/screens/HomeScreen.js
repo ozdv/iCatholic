@@ -3,30 +3,41 @@ import {
     StyleSheet,
     Text,
     SafeAreaView,
-    View,
     ScrollView,
     Alert,
 } from "react-native";
 import { Button, UserLogo } from "../components";
 import { colors } from "../constants";
+import ExamenScreen from "./ExamenScreen";
+import { hour } from "../helpers";
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
+    const welcomeMessageFunction = (hour) => {
+        if (hour <= 11) {
+            return "Good morning";
+        } else if (hour <= 16) {
+            return "Good afternoon";
+        } else {
+            return "Good evening";
+        }
+    };
+    const welcomeMessage = welcomeMessageFunction(hour);
     return (
         <ScrollView centerContent={true} style={styles.ScrollView}>
             <SafeAreaView style={styles.HomeScreen}>
                 <UserLogo />
-                <Text style={styles.welcomeText}>Good Morning Cam!</Text>
+                <Text style={styles.welcomeText}>{welcomeMessage} Cam!</Text>
                 <Text style={styles.quoteTexts}>
                     "The worst prison would be a closed heart."
                 </Text>
                 <Text style={styles.quoteAuthor}>- St. John Paul II</Text>
                 <Button
                     text={"Daily Mass Readings"}
-                    onPress={() => Alert.alert("pressed!")}
+                    onPress={() => navigation.navigate("Mass")}
                 />
                 <Button
                     text={"Examination of Conscience"}
-                    onPress={() => Alert.alert("pressed!")}
+                    onPress={() => navigation.navigate("Examen")}
                 />
             </SafeAreaView>
         </ScrollView>

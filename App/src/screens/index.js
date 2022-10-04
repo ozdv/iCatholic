@@ -4,6 +4,7 @@ import MassScreen from "./MassScreen";
 import MoreScreen from "./MoreScreen";
 import PrayersScreen from "./PrayersScreen";
 import ExamenScreen from "./ExamenScreen";
+import LoginScreen from "./LoginScreen";
 
 export {
     HomeScreen,
@@ -12,4 +13,5 @@ export {
     MoreScreen,
     PrayersScreen,
     ExamenScreen,
+    LoginScreen,
 };

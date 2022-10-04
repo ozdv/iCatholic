@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 
@@ -12,10 +13,10 @@ import {
     MoreScreen,
     BibleScreen,
     MassScreen,
+    ExamenScreen,
 } from "./App/src/screens";
 
 export default function App() {
-    const Tab = createBottomTabNavigator();
     let iconSize = 20;
     const [fontsLoaded] = useFonts({
         "Roboto-Regular": require("./App/assets/Fonts/Roboto-Regular.ttf"),
@@ -34,21 +35,36 @@ export default function App() {
     if (!fontsLoaded) {
         return null;
     }
+    const Stack = createNativeStackNavigator();
+    const Tab = createBottomTabNavigator();
+    function HomeStackScreen() {
+        return (
+            <Stack.Navigator>
+                <Stack.Screen name="Home" component={HomeScreen} />
+                <Stack.Screen
+                    options={{ headerBackVisible: false }}
+                    name="Examen"
+                    component={ExamenScreen}
+                />
+            </Stack.Navigator>
+        );
+    }
 
     return (
         <NavigationContainer>
             <Tab.Navigator
-                initialRouteName="Home"
+                initialRouteName="HomeStack"
                 screenOptions={{
                     tabBarActiveTintColor: colors.blue400,
                     tabBarInactiveTintColor: colors.neutral70,
                     tabBarLabelStyle: styles.label,
                     tabBarStyle: styles.tabBar,
+                    headerShown: false,
                 }}
             >
                 <Tab.Screen
-                    name="Home"
-                    component={HomeScreen}
+                    name="Ho"
+                    component={HomeStackScreen}
                     options={{
                         tabBarIcon: ({ color }) => {
                             return (
@@ -66,6 +82,7 @@ export default function App() {
                     name="Bible"
                     component={BibleScreen}
                     options={{
+                        headerShown: true,
                         tabBarIcon: ({ color }) => {
                             return (
                                 <Icon
@@ -82,6 +99,7 @@ export default function App() {
                     name="Mass"
                     component={MassScreen}
                     options={{
+                        headerShown: true,
                         tabBarIcon: ({ color }) => {
                             return (
                                 <Icon
@@ -98,6 +116,7 @@ export default function App() {
                     name="Pray"
                     component={PrayersScreen}
                     options={{
+                        headerShown: true,
                         tabBarIcon: ({ color }) => {
                             return (
                                 <Icon

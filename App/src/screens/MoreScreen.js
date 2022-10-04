@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView, Dimensions } from "react-native";
-
+import { date, dateTime, time, hour } from "../helpers";
 import colors from "../constants/colors";
 
 export default function MoreScreen() {
@@ -18,6 +18,7 @@ export default function MoreScreen() {
         );
         return () => subscription?.remove();
     });
+    console.log("day", dateTime, "time", time, "hour", hour);
 
     return (
         <SafeAreaView style={styles.MoreScreen}>
@@ -34,6 +35,14 @@ export default function MoreScreen() {
                         {key} - {value}
                     </Text>
                 ))}
+                <Text>Datetime:</Text>
+                <Text>{dateTime}</Text>
+                <Text>Time:</Text>
+                <Text>{time}</Text>
+                <Text>Date:</Text>
+                <Text>{date}</Text>
+                <Text>Hour:</Text>
+                <Text>{hour}</Text>
             </View>
         </SafeAreaView>
     );
