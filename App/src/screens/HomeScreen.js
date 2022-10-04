@@ -32,8 +32,8 @@ export default function HomeScreen({ navigation }) {
                 </Text>
                 <Text style={styles.quoteAuthor}>- St. John Paul II</Text>
                 <Button
-                    text={"Daily Mass Readings"}
-                    onPress={() => navigation.navigate("Mass")}
+                    text={"Login"}
+                    onPress={() => navigation.navigate("Login")}
                 />
                 <Button
                     text={"Examination of Conscience"}

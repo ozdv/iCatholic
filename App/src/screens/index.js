@@ -5,6 +5,8 @@ import MoreScreen from "./MoreScreen";
 import PrayersScreen from "./PrayersScreen";
 import ExamenScreen from "./ExamenScreen";
 import LoginScreen from "./LoginScreen";
+import RegisterScreen from "./RegisterScreen";
+import ForgotPasswordScreen from "./ForgotPasswordScreen";
 
 export {
     HomeScreen,
@@ -14,4 +16,6 @@ export {
     PrayersScreen,
     ExamenScreen,
     LoginScreen,
+    RegisterScreen,
+    ForgotPasswordScreen,
 };
