@@ -1,11 +1,12 @@
-import React from "react";
-import { StyleSheet } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet, LogBox } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import { registerRootComponent } from "expo";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 import { colors, Icon } from "./src/constants";
 import {
@@ -39,6 +40,15 @@ export default function App() {
         return null;
     }
 
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            console.log("APP.JS - USER", user.email);
+        } else {
+            console.log("APP.JS - NO USER");
+        }
+    });
+
     const Stack = createNativeStackNavigator();
     const Tab = createBottomTabNavigator();
 
@@ -52,7 +62,7 @@ export default function App() {
                 />
                 <Stack.Screen
                     options={{ headerBackVisible: false }}
-                    name="Login"
+                    name="Register"
                     component={RegisterScreen}
                 />
             </Stack.Navigator>
@@ -62,16 +72,16 @@ export default function App() {
     function HomeStackScreen() {
         return (
             <Stack.Navigator>
-                <Stack.Screen
-                    options={{ headerBackVisible: false }}
-                    name="Login"
-                    component={LoginScreen}
-                />
                 <Stack.Screen name="Homepage" component={HomeScreen} />
                 <Stack.Screen
                     options={{ headerBackVisible: false }}
                     name="Examen"
                     component={ExamenScreen}
+                />
+                <Stack.Screen
+                    options={{ headerBackVisible: false }}
+                    name="Login"
+                    component={LoginScreen}
                 />
             </Stack.Navigator>
         );

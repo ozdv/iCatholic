@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useNavigation } from "@react-navigation/core";
+import React, { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import {
     StyleSheet,
     Text,
@@ -8,30 +8,33 @@ import {
     TextInput,
     TouchableOpacity,
 } from "react-native";
-import { auth } from "../firebase";
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+} from "firebase/auth";
+
 import colors from "../constants/colors";
 
 export default function LoginScreen() {
+    const auth = getAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const navigation = useNavigation();
 
-    useEffect(() => {
-        console.log("111111111");
-        const unsubscribe = auth.onAuthStateChanged((user) => {
-            if (user) {
-                navigation.navigate("Home");
-                console.log("User Login:", user);
-            }
-        });
-        console.log("unsubscribe", unsubscribe);
-
-        return unsubscribe;
-    }, []);
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            const uid = user;
+            console.log("login - USER", user.email);
+        } else {
+            console.log("login - no USER");
+        }
+    });
 
     const handleSignUp = () => {
-        auth.createUserWithEmailAndPassword(email, password)
+        createUserWithEmailAndPassword(auth, email, password)
             .then((userCredentials) => {
                 const user = userCredentials.user;
                 console.log("User Registered:", user.email);
@@ -40,7 +43,7 @@ export default function LoginScreen() {
     };
 
     const handleLogin = () => {
-        auth.signInWithEmailAndPassword(email, password)
+        signInWithEmailAndPassword(auth, email, password)
             .then((userCredentials) => {
                 const user = userCredentials.user;
                 console.log("User Login:", user);
@@ -67,9 +70,7 @@ export default function LoginScreen() {
             </View>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
-                    onPress={() => {
-                        handleLogin;
-                    }}
+                    onPress={navigation.navigate("Register")}
                     style={styles.button}
                 >
                     <Text style={styles.buttonText}>Login</Text>

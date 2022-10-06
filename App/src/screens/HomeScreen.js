@@ -10,6 +10,7 @@ import { Button, UserLogo } from "../components";
 import { colors } from "../constants";
 import ExamenScreen from "./ExamenScreen";
 import { hour } from "../helpers";
+import { auth } from "../firebase";
 
 export default function HomeScreen({ navigation }) {
     const welcomeMessageFunction = (hour) => {
@@ -21,7 +22,9 @@ export default function HomeScreen({ navigation }) {
             return "Good evening";
         }
     };
+    console.log("user", auth.currentUser);
     const welcomeMessage = welcomeMessageFunction(hour);
+
     return (
         <ScrollView centerContent={true} style={styles.ScrollView}>
             <SafeAreaView style={styles.HomeScreen}>
