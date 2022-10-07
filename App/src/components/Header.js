@@ -1,9 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { colors, Icon } from "../constants";
+import { colors } from "../constants";
 import IconButton from "./IconButton";
 
 export default function Header(props) {
+    console.log("props", props);
     return (
         <View style={styles.Header}>
             <Text style={styles.HeaderTitle}>{props.children}</Text>
@@ -14,6 +15,7 @@ export default function Header(props) {
                 name="ios-menu"
                 size={38}
                 iconStyle={styles.menuIcon}
+                // onTouch={navigation.openDrawer()}
             />
         </View>
     );

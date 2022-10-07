@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
@@ -12,7 +13,6 @@ import { Loading, Header } from "./components";
 import {
     HomeScreen,
     PrayersScreen,
-    MoreScreen,
     BibleScreen,
     MassScreen,
     ExamenScreen,
@@ -36,7 +36,7 @@ if (getApps().length === 0) {
     initializeApp(firebaseConfig);
 }
 
-// ----- NAVIGATION -----
+// ----- AUTH -----
 const AuthStack = createNativeStackNavigator();
 const Auth = () => {
     return (
@@ -55,9 +55,19 @@ const Auth = () => {
     );
 };
 
-const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
+// ----- DRAWER -----
+const Drawer = createDrawerNavigator();
 
+function DrawerScreens() {
+    return (
+        <Drawer.Navigator initialRouteName="Home">
+            <Drawer.Screen name="Home" component={HomeScreen} />
+        </Drawer.Navigator>
+    );
+}
+
+// ----- HomeStack -----
+const Stack = createNativeStackNavigator();
 function HomeStackScreen() {
     return (
         <Stack.Navigator>
@@ -74,6 +84,8 @@ function HomeStackScreen() {
     );
 }
 
+// ----- Tabs -----
+const Tab = createBottomTabNavigator();
 const Main = () => {
     return (
         <Tab.Navigator
@@ -159,8 +171,6 @@ const Main = () => {
                     tabBarIcon: ({ color }) => {
                         return (
                             <Icon
-                                // type="entypo"
-                                // name="menu"
                                 type="fa5"
                                 name="dove"
                                 size={20}

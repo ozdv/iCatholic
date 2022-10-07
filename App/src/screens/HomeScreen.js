@@ -43,6 +43,8 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "flex-start",
         flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
     },
 
     welcomeText: {
