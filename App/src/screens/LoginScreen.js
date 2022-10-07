@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import {
     StyleSheet,
     Text,
@@ -8,52 +9,28 @@ import {
     TextInput,
     TouchableOpacity,
 } from "react-native";
-import {
-    getAuth,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    onAuthStateChanged,
-} from "firebase/auth";
-
 import colors from "../constants/colors";
 
 export default function LoginScreen() {
     const auth = getAuth();
+    const navigation = useNavigation();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const navigation = useNavigation();
-
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            const uid = user;
-            console.log("login - USER", user.email);
-        } else {
-            console.log("login - no USER");
-        }
-    });
-
-    const handleSignUp = () => {
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredentials) => {
-                const user = userCredentials.user;
-                console.log("User Registered:", user.email);
-            })
-            .catch((error) => alert(error.message));
-    };
-
-    const handleLogin = () => {
-        signInWithEmailAndPassword(auth, email, password)
-            .then((userCredentials) => {
-                const user = userCredentials.user;
-                console.log("User Login:", user);
-            })
-            .catch((error) => alert(error.message));
-    };
+    async function handleLogin() {
+        await signInWithEmailAndPassword(auth, email, password).catch(function (
+            error
+        ) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            alert(errorMessage);
+        });
+    }
 
     return (
         <KeyboardAvoidingView style={styles.container} behavior="padding">
             <View style={styles.inputContainer}>
+                <Text style={styles.logo}>Login</Text>
                 <TextInput
                     placeholder="Email"
                     value={email}
@@ -67,20 +44,30 @@ export default function LoginScreen() {
                     style={styles.input}
                     secureTextEntry
                 />
+                <Text
+                    style={styles.forgotText}
+                    onPress={() => navigation.navigate("ForgetPassword")}
+                >
+                    {" "}
+                    Forgot Password?
+                </Text>
             </View>
             <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                    onPress={navigation.navigate("Register")}
-                    style={styles.button}
-                >
+                <TouchableOpacity onPress={handleLogin} style={styles.button}>
                     <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={handleSignUp}
-                    style={[styles.button, styles.buttonOutline]}
-                >
-                    <Text style={styles.buttonOutlineText}>Register</Text>
-                </TouchableOpacity>
+                <View style={styles.newUser}>
+                    <Text style={styles.newUserText}>
+                        New here?
+                        <Text
+                            style={styles.newUserButton}
+                            onPress={() => navigation.navigate("Register")}
+                        >
+                            {" "}
+                            Register!
+                        </Text>
+                    </Text>
+                </View>
             </View>
         </KeyboardAvoidingView>
     );
@@ -91,6 +78,20 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         flex: 1,
+    },
+    logo: {
+        // fontFamily: "Roboto-bold",
+        fontSize: 46,
+        color: colors.blue400,
+        marginBottom: 20,
+        // top: 150,
+        // position: "absolute",
+    },
+    header: {
+        // fontFamily: "Roboto-bold",
+        fontSize: 36,
+        fontWeight: "400",
+        color: colors.neutral30,
     },
     inputContainer: {
         width: "80%",
@@ -103,10 +104,10 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
     buttonContainer: {
-        width: "60%",
+        width: "80%",
         justifyContent: "center",
         alignContent: "center",
-        marginTop: 40,
+        marginTop: 20,
     },
     button: {
         backgroundColor: colors.blue400,
@@ -115,20 +116,28 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignItems: "center",
     },
-    buttonOutline: {
-        backgroundColor: colors.white,
-        marginTop: 5,
-        borderColor: colors.blue400,
-        borderWidth: 2,
-    },
     buttonText: {
         color: colors.white,
         fontSize: 16,
         fontWeight: "700",
     },
-    buttonOutlineText: {
+    newUser: {
+        alignItems: "left",
+        marginTop: 30,
+        alignItems: "center",
+    },
+    newUserText: {
+        color: colors.neutral50,
+        fontSize: 18,
+    },
+    newUserButton: {
         color: colors.blue400,
-        fontSize: 16,
-        fontWeight: "700",
+        fontSize: 18,
+    },
+    forgotText: {
+        color: colors.blue400,
+        textAlign: "right",
+        fontSize: 14,
+        marginTop: 20,
     },
 });

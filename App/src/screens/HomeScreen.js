@@ -1,16 +1,9 @@
 import React from "react";
-import {
-    StyleSheet,
-    Text,
-    SafeAreaView,
-    ScrollView,
-    Alert,
-} from "react-native";
+import { StyleSheet, Text, SafeAreaView, ScrollView } from "react-native";
 import { Button, UserLogo } from "../components";
 import { colors } from "../constants";
-import ExamenScreen from "./ExamenScreen";
+import { getAuth, signOut } from "firebase/auth";
 import { hour } from "../helpers";
-import { auth } from "../firebase";
 
 export default function HomeScreen({ navigation }) {
     const welcomeMessageFunction = (hour) => {
@@ -22,8 +15,9 @@ export default function HomeScreen({ navigation }) {
             return "Good evening";
         }
     };
-    console.log("user", auth.currentUser);
+
     const welcomeMessage = welcomeMessageFunction(hour);
+    const auth = getAuth();
 
     return (
         <ScrollView centerContent={true} style={styles.ScrollView}>
@@ -38,10 +32,7 @@ export default function HomeScreen({ navigation }) {
                     text={"Login"}
                     onPress={() => navigation.navigate("Login")}
                 />
-                <Button
-                    text={"Examination of Conscience"}
-                    onPress={() => navigation.navigate("Examen")}
-                />
+                <Button text={"Sign out"} onPress={() => signOut(auth)} />
             </SafeAreaView>
         </ScrollView>
     );

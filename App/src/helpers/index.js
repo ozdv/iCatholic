@@ -1,3 +1,3 @@
-import { dateTime, date, time, hour } from "./datetime";
+import { dateTime, today, time, hour } from "./datetime";
 
-export { dateTime, date, time, hour };
+export { dateTime, today, time, hour };

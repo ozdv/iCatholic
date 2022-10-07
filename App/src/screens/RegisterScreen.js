@@ -10,30 +10,52 @@ import {
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 import colors from "../constants/colors";
+import { Icon } from "../constants";
+import { useNavigation } from "@react-navigation/native";
 
 export default function LoginScreen() {
     const auth = getAuth();
-
+    const navigation = useNavigation();
+    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [pwd1, setPwd1] = useState("");
     const [pwd2, setPwd2] = useState("");
 
     const handleSignUp = () => {
-        if (pwd1 === pwd2) {
-            createUserWithEmailAndPassword(auth, email, password)
+        if (pwd1 === pwd2 && name !== "") {
+            createUserWithEmailAndPassword(auth, email, pwd1)
                 .then((userCredentials) => {
                     const user = userCredentials.user;
-                    console.log("register - User Registered:", user.email);
                 })
                 .catch((error) => alert(error.message));
-        } else {
+        } else if (pwd1 === pwd2) {
             alert("Password do not match");
+        } else {
+            alert("Name is left empty");
         }
     };
 
     return (
         <KeyboardAvoidingView style={styles.container} behavior="padding">
+            <TouchableOpacity
+                style={styles.backButton}
+                onPress={() => navigation.navigate("Login")}
+            >
+                <Icon
+                    type="ionicon"
+                    name="arrow-back"
+                    size={28}
+                    color={colors.blue400}
+                />
+            </TouchableOpacity>
             <View style={styles.inputContainer}>
+                <Text style={styles.logo}>Sign up</Text>
+                <TextInput
+                    placeholder="Name"
+                    value={name}
+                    onChangeText={(text) => setName(text)}
+                    style={styles.input}
+                />
                 <TextInput
                     placeholder="Email"
                     value={email}
@@ -70,6 +92,12 @@ const styles = StyleSheet.create({
         alignItems: "center",
         flex: 1,
     },
+    logo: {
+        // fontFamily: "Roboto-bold",
+        fontSize: 46,
+        color: colors.blue400,
+        marginBottom: 20,
+    },
     inputContainer: {
         width: "80%",
     },
@@ -79,6 +107,9 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         borderRadius: 10,
         marginTop: 5,
+    },
+    nameInput: {
+        flex: 1,
     },
     buttonContainer: {
         width: "60%",
@@ -97,5 +128,10 @@ const styles = StyleSheet.create({
         color: colors.white,
         fontSize: 16,
         fontWeight: "700",
+    },
+    backButton: {
+        position: "absolute",
+        top: 50,
+        left: 30,
     },
 });
