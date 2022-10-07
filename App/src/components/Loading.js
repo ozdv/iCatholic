@@ -2,7 +2,7 @@ import React from "react";
 import { View, ActivityIndicator } from "react-native";
 import { colors } from "../constants";
 
-export default function ({ navigation }) {
+export default function () {
     return (
         <View
             style={{

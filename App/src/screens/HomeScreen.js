@@ -29,8 +29,8 @@ export default function HomeScreen({ navigation }) {
                 </Text>
                 <Text style={styles.quoteAuthor}>- St. John Paul II</Text>
                 <Button
-                    text={"Login"}
-                    onPress={() => navigation.navigate("Login")}
+                    text={"Examen"}
+                    onPress={() => navigation.navigate("Examen")}
                 />
                 <Button text={"Sign out"} onPress={() => signOut(auth)} />
             </SafeAreaView>

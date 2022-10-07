@@ -1,50 +1,53 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import colors from "../constants/colors";
 
 export default function Button(props) {
-    const { height, width, disabled, color, text, onPress } = props;
+    const { style, disabled, text, onPress } = props;
+
     return (
-        <TouchableOpacity
-            style={styles(props).Button}
-            onPress={onPress}
-            activeOpacity={0.6}
-        >
-            <Text
-                adjustsFontSizeToFit={true}
-                numberOfLines={1}
-                style={styles(props).text}
+        <View style={styles.container}>
+            <TouchableOpacity
+                style={[
+                    style,
+                    styles.button,
+                    disabled
+                        ? { backgroundColor: colors.neutral80 }
+                        : { backgroundColor: colors.blue400 },
+                ]}
+                onPress={disabled ? () => {} : onPress}
+                activeOpacity={0.6}
+                disabled={disabled}
             >
-                {text}
-            </Text>
-        </TouchableOpacity>
+                <Text
+                    adjustsFontSizeToFit={true}
+                    numberOfLines={1}
+                    style={styles.buttonText}
+                >
+                    {text}
+                </Text>
+            </TouchableOpacity>
+        </View>
     );
 }
 
-const styles = (props) =>
-    StyleSheet.create({
-        Button: {
-            flex: 1,
-            justifyContent: "center",
-            marginTop: 20,
-            minHeight: 100,
-            marginRight: 20,
-            marginLeft: 20,
-            width: props.width ? props.width : "90%",
-            maxHeight: props.height ? props.height : "20%",
-            backgroundColor: props.color ? props.color : colors.white,
-            borderColor: colors.neutral90,
-            borderWidth: 1,
-            shadowRadius: 8,
-            shadowOpacity: 0.2,
-            shadowColor: colors.neutral40,
-            borderRadius: 10,
-        },
-        text: {
-            color: colors.neutral30,
-            fontFamily: "Roboto-Regular",
-            textAlignVertical: "center",
-            textAlign: "center",
-            fontSize: 24,
-        },
-    });
+const styles = StyleSheet.create({
+    container: {
+        width: "80%",
+        justifyContent: "center",
+        alignContent: "center",
+        marginTop: 20,
+    },
+    buttonText: {
+        color: colors.white,
+        fontSize: 16,
+        fontWeight: "700",
+    },
+    button: {
+        // backgroundColor: colors.blue400,
+        width: "100%",
+        padding: 15,
+        borderRadius: 10,
+        alignItems: "center",
+    },
+});

@@ -4,9 +4,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
+import { useFonts } from "expo-font";
 import { initializeApp, getApps } from "firebase/app";
 import { AuthContext } from "./AuthProvider";
 import { colors, Icon } from "./constants";
+import { Loading, Header } from "./components";
 import {
     HomeScreen,
     PrayersScreen,
@@ -18,7 +20,6 @@ import {
     RegisterScreen,
     ForgotPasswordScreen,
 } from "./screens";
-import Loading from "./components/Loading";
 
 // ----- FIREBASE CONFIG -----
 const firebaseConfig = {
@@ -60,17 +61,15 @@ const Tab = createBottomTabNavigator();
 function HomeStackScreen() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Homepage" component={HomeScreen} />
             <Stack.Screen
-                options={{ headerBackVisible: false }}
-                name="Examen"
-                component={ExamenScreen}
+                name="iCatholic"
+                component={HomeScreen}
+                options={{
+                    headerTitle: (props) => <Header {...props} />,
+                    headerTransparent: true,
+                }}
             />
-            <Stack.Screen
-                options={{ headerBackVisible: false }}
-                name="Login"
-                component={LoginScreen}
-            />
+            <Stack.Screen name="Examen" component={ExamenScreen} />
         </Stack.Navigator>
     );
 }
@@ -124,13 +123,12 @@ const Main = () => {
                 name="Mass"
                 component={MassScreen}
                 options={{
-                    headerShown: true,
                     tabBarIcon: ({ color }) => {
                         return (
                             <Icon
-                                type="materialCommunity"
-                                name="cross"
-                                size={28}
+                                type="fa5"
+                                name="church"
+                                size={20}
                                 color={color}
                             />
                         );
@@ -141,7 +139,6 @@ const Main = () => {
                 name="Pray"
                 component={PrayersScreen}
                 options={{
-                    headerShown: true,
                     tabBarIcon: ({ color }) => {
                         return (
                             <Icon
@@ -155,16 +152,18 @@ const Main = () => {
                 }}
             />
             <Tab.Screen
-                name="More"
-                component={MoreScreen}
+                name="Examen"
+                component={ExamenScreen}
                 options={{
                     headerShown: false,
                     tabBarIcon: ({ color }) => {
                         return (
                             <Icon
-                                type="entypo"
-                                name="menu"
-                                size={28}
+                                // type="entypo"
+                                // name="menu"
+                                type="fa5"
+                                name="dove"
+                                size={20}
                                 color={color}
                             />
                         );
@@ -179,6 +178,26 @@ export default function AppNavigator() {
     const auth = useContext(AuthContext);
     const user = auth.user;
     console.log("user: ", user);
+
+    const [fontsLoaded] = useFonts({
+        "Roboto-Regular": require("../assets/Fonts/Roboto-Regular.ttf"),
+        "Roboto-Italic": require("../assets/Fonts/Roboto-Italic.ttf"),
+        "Roboto-BlackItalic": require("../assets/Fonts/Roboto-BlackItalic.ttf"),
+        "Roboto-Black": require("../assets/Fonts/Roboto-Black.ttf"),
+        "Roboto-BoldItalic": require("../assets/Fonts/Roboto-BoldItalic.ttf"),
+        "Roboto-Light": require("../assets/Fonts/Roboto-Light.ttf"),
+        "Roboto-LightItalic": require("../assets/Fonts/Roboto-LightItalic.ttf"),
+        "Roboto-Medium": require("../assets/Fonts/Roboto-Medium.ttf"),
+        "Roboto-MediumItalic": require("../assets/Fonts/Roboto-MediumItalic.ttf"),
+        "Roboto-Thin": require("../assets/Fonts/Roboto-Thin.ttf"),
+        "Roboto-ThinItalic": require("../assets/Fonts/Roboto-ThinItalic.ttf"),
+        "Roboto-Bold": require("../assets/Fonts/Roboto-Bold.ttf"),
+    });
+
+    if (!fontsLoaded) {
+        return null;
+    }
+
     return (
         <NavigationContainer>
             {user === null && <Loading />}

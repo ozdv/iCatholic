@@ -5,13 +5,12 @@ import {
     View,
     KeyboardAvoidingView,
     TextInput,
-    TouchableOpacity,
 } from "react-native";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 import colors from "../constants/colors";
-import { Icon } from "../constants";
 import { useNavigation } from "@react-navigation/native";
+import { Button, IconButton } from "../components";
 
 export default function LoginScreen() {
     const auth = getAuth();
@@ -37,19 +36,16 @@ export default function LoginScreen() {
 
     return (
         <KeyboardAvoidingView style={styles.container} behavior="padding">
-            <TouchableOpacity
-                style={styles.backButton}
+            <IconButton
                 onPress={() => navigation.navigate("Login")}
-            >
-                <Icon
-                    type="ionicon"
-                    name="arrow-back"
-                    size={28}
-                    color={colors.blue400}
-                />
-            </TouchableOpacity>
+                type="ionicon"
+                name="arrow-back"
+                size={28}
+                color={colors.blue400}
+                buttonStyle={styles.backButton}
+            />
             <View style={styles.inputContainer}>
-                <Text style={styles.logo}>Sign up</Text>
+                <Text style={styles.title}>Sign up</Text>
                 <TextInput
                     placeholder="Name"
                     value={name}
@@ -77,11 +73,11 @@ export default function LoginScreen() {
                     secureTextEntry
                 />
             </View>
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity onPress={handleSignUp} style={styles.button}>
-                    <Text style={styles.buttonText}>Register</Text>
-                </TouchableOpacity>
-            </View>
+            <Button
+                onPress={handleSignUp}
+                style={styles.button}
+                text="Register"
+            />
         </KeyboardAvoidingView>
     );
 }
@@ -92,8 +88,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         flex: 1,
     },
-    logo: {
-        // fontFamily: "Roboto-bold",
+    title: {
+        fontFamily: "Roboto-Regular",
         fontSize: 46,
         color: colors.blue400,
         marginBottom: 20,
@@ -110,24 +106,6 @@ const styles = StyleSheet.create({
     },
     nameInput: {
         flex: 1,
-    },
-    buttonContainer: {
-        width: "60%",
-        justifyContent: "center",
-        alignContent: "center",
-        marginTop: 40,
-    },
-    button: {
-        backgroundColor: colors.blue400,
-        width: "100%",
-        padding: 15,
-        borderRadius: 10,
-        alignItems: "center",
-    },
-    buttonText: {
-        color: colors.white,
-        fontSize: 16,
-        fontWeight: "700",
     },
     backButton: {
         position: "absolute",

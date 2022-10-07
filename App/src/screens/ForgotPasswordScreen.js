@@ -7,10 +7,9 @@ import {
     View,
     KeyboardAvoidingView,
     TextInput,
-    TouchableOpacity,
 } from "react-native";
 import colors from "../constants/colors";
-import { Icon } from "../constants";
+import { Button, IconButton } from "../components";
 
 export default function ForgetPassword() {
     const auth = getAuth();
@@ -30,19 +29,17 @@ export default function ForgetPassword() {
 
     return (
         <KeyboardAvoidingView style={styles.container} behavior="padding">
-            <TouchableOpacity
-                style={styles.backButton}
+            <IconButton
+                buttonStyle={styles.backButton}
                 onPress={() => navigation.navigate("Login")}
-            >
-                <Icon
-                    type="ionicon"
-                    name="arrow-back"
-                    size={28}
-                    color={colors.blue400}
-                />
-            </TouchableOpacity>
+                type="ionicon"
+                name="arrow-back"
+                size={28}
+                color={colors.blue400}
+            />
+
             <View style={styles.inputContainer}>
-                <Text style={styles.logo}>Forgot {"\n"}Password?</Text>
+                <Text style={styles.title}>Forgot {"\n"}Password?</Text>
                 <TextInput
                     placeholder="Email"
                     value={email}
@@ -50,14 +47,7 @@ export default function ForgetPassword() {
                     style={styles.input}
                 />
             </View>
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                    onPress={handleForgotPassword}
-                    style={styles.button}
-                >
-                    <Text style={styles.buttonText}>Submit</Text>
-                </TouchableOpacity>
-            </View>
+            <Button onPress={handleForgotPassword} text="Submit" />
         </KeyboardAvoidingView>
     );
 }
@@ -68,17 +58,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
         flex: 1,
     },
-    logo: {
-        // fontFamily: "Roboto-bold",
+    title: {
+        fontFamily: "Roboto-Regular",
         fontSize: 46,
         color: colors.blue400,
         marginBottom: 20,
-    },
-    header: {
-        // fontFamily: "Roboto-bold",
-        fontSize: 36,
-        fontWeight: "400",
-        color: colors.neutral30,
     },
     inputContainer: {
         width: "80%",
@@ -89,24 +73,6 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         borderRadius: 10,
         marginTop: 5,
-    },
-    buttonContainer: {
-        width: "80%",
-        justifyContent: "center",
-        alignContent: "center",
-        marginTop: 20,
-    },
-    button: {
-        backgroundColor: colors.blue400,
-        width: "100%",
-        padding: 15,
-        borderRadius: 10,
-        alignItems: "center",
-    },
-    buttonText: {
-        color: colors.white,
-        fontSize: 16,
-        fontWeight: "700",
     },
     forgotText: {
         color: colors.neutral50,
