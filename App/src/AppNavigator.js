@@ -18,6 +18,7 @@ import {
     RegisterScreen,
     ForgotPasswordScreen,
 } from "./screens";
+import Loading from "./components/Loading";
 
 // ----- FIREBASE CONFIG -----
 const firebaseConfig = {
@@ -180,9 +181,9 @@ export default function AppNavigator() {
     console.log("user: ", user);
     return (
         <NavigationContainer>
-            {/* {user === null && <ExamenScreen />} // Loading screen maybe? */}
-            {user == false && <Auth />}
-            {user == true && <Main />}
+            {user === null && <Loading />}
+            {user === false && <Auth />}
+            {user === true && <Main />}
             <StatusBar style="auto" />
         </NavigationContainer>
     );
