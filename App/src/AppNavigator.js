@@ -20,16 +20,25 @@ import {
     RegisterScreen,
     ForgotPasswordScreen,
 } from "./screens";
+import {
+    apiKey,
+    authDomain,
+    projectId,
+    storageBucket,
+    messagingSenderId,
+    appId,
+    measurementId,
+} from "@env";
 
 // ----- FIREBASE CONFIG -----
 const firebaseConfig = {
-    apiKey: "AIzaSyDtJrpoXNyXLOVcpSHcuBKWiO1vI8doXYk",
-    authDomain: "icatholic-ozdv.firebaseapp.com",
-    projectId: "icatholic-ozdv",
-    storageBucket: "icatholic-ozdv.appspot.com",
-    messagingSenderId: "893491319030",
-    appId: "1:893491319030:web:fa7595e2e3da645fe41cd7",
-    measurementId: "G-KRKGC0XLMJ",
+    apiKey,
+    authDomain,
+    projectId,
+    storageBucket,
+    messagingSenderId,
+    appId,
+    measurementId,
 };
 
 if (getApps().length === 0) {
