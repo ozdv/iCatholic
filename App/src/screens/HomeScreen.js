@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, Text, SafeAreaView, ScrollView } from "react-native";
 import { Button, UserLogo } from "../components";
 import { colors } from "../constants";
-import { getAuth, signOut } from "firebase/auth";
 import { hour } from "../helpers";
 
 export default function HomeScreen({ navigation }) {
@@ -17,7 +16,6 @@ export default function HomeScreen({ navigation }) {
     };
 
     const welcomeMessage = welcomeMessageFunction(hour);
-    const auth = getAuth();
 
     return (
         <ScrollView centerContent={true} style={styles.ScrollView}>
@@ -32,7 +30,6 @@ export default function HomeScreen({ navigation }) {
                     text={"Examen"}
                     onPress={() => navigation.navigate("Examen")}
                 />
-                <Button text={"Sign out"} onPress={() => signOut(auth)} />
             </SafeAreaView>
         </ScrollView>
     );

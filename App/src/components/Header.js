@@ -1,22 +1,11 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { colors } from "../constants";
-import IconButton from "./IconButton";
 
 export default function Header(props) {
-    console.log("props", props);
     return (
         <View style={styles.Header}>
-            <Text style={styles.HeaderTitle}>{props.children}</Text>
-
-            <IconButton
-                color={colors.neutral30}
-                type="ionicon"
-                name="ios-menu"
-                size={38}
-                iconStyle={styles.menuIcon}
-                // onTouch={navigation.openDrawer()}
-            />
+            <Text style={styles.HeaderTitle}>{props.title}</Text>
         </View>
     );
 }
@@ -33,8 +22,5 @@ const styles = StyleSheet.create({
         textAlign: "left",
         color: colors.blue400,
         fontFamily: "Roboto-Bold",
-    },
-    menuIcon: {
-        marginRight: 32,
     },
 });

@@ -1,24 +1,34 @@
 import React, { useContext } from "react";
 import { StyleSheet } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import {
+    getFocusedRouteNameFromRoute,
+    NavigationContainer,
+} from "@react-navigation/native";
+import {
+    createDrawerNavigator,
+    DrawerItem,
+    DrawerContentScrollView,
+    DrawerItemList,
+} from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import { initializeApp, getApps } from "firebase/app";
+import { getAuth, signOut } from "firebase/auth";
 import { AuthContext } from "./AuthProvider";
 import { colors, Icon } from "./constants";
-import { Loading, Header } from "./components";
+import { Loading, Header, IconButton } from "./components";
 import {
     HomeScreen,
-    PrayersScreen,
+    PrayerListScreen,
     BibleScreen,
     MassScreen,
     ExamenScreen,
     LoginScreen,
     RegisterScreen,
     ForgotPasswordScreen,
+    PrayerScreen,
 } from "./screens";
 import {
     apiKey,
@@ -45,9 +55,15 @@ if (getApps().length === 0) {
     initializeApp(firebaseConfig);
 }
 
+function getHeaderTitle(route) {
+    const routeName = getFocusedRouteNameFromRoute(route);
+    return <Header title={routeName} />;
+}
+const auth = getAuth();
+
 // ----- AUTH -----
 const AuthStack = createNativeStackNavigator();
-const Auth = () => {
+const AuthScreens = () => {
     return (
         <AuthStack.Navigator
             screenOptions={{
@@ -66,36 +82,78 @@ const Auth = () => {
 
 // ----- DRAWER -----
 const Drawer = createDrawerNavigator();
+function CustomDrawerContent(props) {
+    return (
+        <DrawerContentScrollView {...props}>
+            <DrawerItemList {...props} />
+            <DrawerItem label="Daily Mass Readings" onPress={() => {}} />
+            <DrawerItem
+                label="Prayers"
+                // onPress={navigation.navigate(PrayerListScreen)}
+            />
+            <DrawerItem label="Holy Bible" onPress={() => {}} />
+            <DrawerItem label="Confession" onPress={() => {}} />
+            <DrawerItem label="Settings" onPress={() => {}} />
+            <DrawerItem label="Divine Office" onPress={() => {}} />
+            <DrawerItem label="Submit Feedback" onPress={() => {}} />
+            <DrawerItem label="Help" onPress={() => alert("Link to help")} />
+            <DrawerItem label="Sign Out" onPress={() => signOut(auth)} />
+        </DrawerContentScrollView>
+    );
+}
 
 function DrawerScreens() {
     return (
-        <Drawer.Navigator initialRouteName="Home">
-            <Drawer.Screen name="Home" component={HomeScreen} />
+        <Drawer.Navigator
+            drawerContent={(props) => <CustomDrawerContent {...props} />}
+            screenOptions={({ navigation, route }) => ({
+                headerLeft: () => (
+                    <IconButton
+                        color={colors.blue400}
+                        type="ionicon"
+                        name="ios-menu"
+                        size={30}
+                        buttonStyle={{
+                            marginLeft: 20,
+                        }}
+                        iconStyle={styles.menuIcon}
+                        onPress={navigation.toggleDrawer}
+                    />
+                ),
+                headerTitle: () => getHeaderTitle(route),
+            })}
+        >
+            <Drawer.Screen
+                name="Home"
+                component={TabScreens}
+                options={{
+                    headerTransparent: true,
+                }}
+                headerMode="screen"
+            />
+            <Drawer.Screen name="Examen" component={ExamenScreen} />
         </Drawer.Navigator>
     );
 }
 
-// ----- HomeStack -----
+// ----- Prayers -----
 const Stack = createNativeStackNavigator();
-function HomeStackScreen() {
+function PrayerScreens() {
     return (
-        <Stack.Navigator>
-            <Stack.Screen
-                name="iCatholic"
-                component={HomeScreen}
-                options={{
-                    headerTitle: (props) => <Header {...props} />,
-                    headerTransparent: true,
-                }}
-            />
-            <Stack.Screen name="Examen" component={ExamenScreen} />
+        <Stack.Navigator
+            screenOptions={{
+                headerShown: false,
+            }}
+        >
+            <Stack.Screen name="All Prayers" component={PrayerListScreen} />
+            <Stack.Screen name="Prayer" component={PrayerScreen} />
         </Stack.Navigator>
     );
 }
 
 // ----- Tabs -----
 const Tab = createBottomTabNavigator();
-const Main = () => {
+function TabScreens() {
     return (
         <Tab.Navigator
             initialRouteName="HomeStack"
@@ -108,9 +166,10 @@ const Main = () => {
             }}
         >
             <Tab.Screen
-                name="Home"
-                component={HomeStackScreen}
+                name="iCatholic"
+                component={HomeScreen}
                 options={{
+                    title: "Home",
                     tabBarIcon: ({ color }) => {
                         return (
                             <Icon
@@ -127,7 +186,9 @@ const Main = () => {
                 name="Bible"
                 component={BibleScreen}
                 options={{
-                    headerShown: true,
+                    headerTitle: (props) => (
+                        <Header {...props} title="iCatholic" />
+                    ),
                     tabBarIcon: ({ color }) => {
                         return (
                             <Icon
@@ -157,8 +218,8 @@ const Main = () => {
                 }}
             />
             <Tab.Screen
-                name="Pray"
-                component={PrayersScreen}
+                name="Prayers"
+                component={PrayerScreens}
                 options={{
                     tabBarIcon: ({ color }) => {
                         return (
@@ -176,7 +237,6 @@ const Main = () => {
                 name="Examen"
                 component={ExamenScreen}
                 options={{
-                    headerShown: false,
                     tabBarIcon: ({ color }) => {
                         return (
                             <Icon
@@ -191,12 +251,11 @@ const Main = () => {
             />
         </Tab.Navigator>
     );
-};
+}
 
 export default function AppNavigator() {
     const auth = useContext(AuthContext);
     const user = auth.user;
-    console.log("user: ", user);
 
     const [fontsLoaded] = useFonts({
         "Roboto-Regular": require("../assets/Fonts/Roboto-Regular.ttf"),
@@ -220,8 +279,8 @@ export default function AppNavigator() {
     return (
         <NavigationContainer>
             {user === null && <Loading />}
-            {user === false && <Auth />}
-            {user === true && <Main />}
+            {user === false && <AuthScreens />}
+            {user === true && <DrawerScreens />}
             <StatusBar style="auto" />
         </NavigationContainer>
     );

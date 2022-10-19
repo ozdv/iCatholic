@@ -2,7 +2,8 @@ import HomeScreen from "./HomeScreen";
 import BibleScreen from "./BibleScreen";
 import MassScreen from "./MassScreen";
 import MoreScreen from "./MoreScreen";
-import PrayersScreen from "./PrayersScreen";
+import PrayerListScreen from "./PrayerListScreen";
+import PrayerScreen from "./PrayerScreen";
 import ExamenScreen from "./ExamenScreen";
 import LoginScreen from "./LoginScreen";
 import RegisterScreen from "./RegisterScreen";
@@ -13,7 +14,8 @@ export {
     BibleScreen,
     MassScreen,
     MoreScreen,
-    PrayersScreen,
+    PrayerListScreen,
+    PrayerScreen,
     ExamenScreen,
     LoginScreen,
     RegisterScreen,
