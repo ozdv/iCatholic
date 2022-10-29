@@ -24,7 +24,7 @@ export default function ItemList(props) {
                     type="ionicon"
                     name="chevron-forward"
                     size={20}
-                    color={colors.neutral30}
+                    color={colors.blue400}
                     style={styles.icon}
                 />
             </TouchableOpacity>

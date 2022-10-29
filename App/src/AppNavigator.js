@@ -56,7 +56,7 @@ if (getApps().length === 0) {
 }
 
 function getHeaderTitle(route) {
-    const routeName = getFocusedRouteNameFromRoute(route);
+    const routeName = getFocusedRouteNameFromRoute(route) ?? "iCatholic";
     return <Header title={routeName} />;
 }
 const auth = getAuth();
@@ -288,14 +288,11 @@ export default function AppNavigator() {
 
 const styles = StyleSheet.create({
     label: {
-        fontSize: 14,
+        fontSize: 16,
         textAlign: "center",
         fontFamily: "Roboto-Regular",
     },
     tabBar: {
         backgroundColor: colors.white,
-        shadowRadius: 8,
-        shadowOpacity: 0.2,
-        shadowColor: colors.neutral40,
     },
 });

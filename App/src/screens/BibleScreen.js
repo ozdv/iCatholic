@@ -14,8 +14,8 @@ export default function BibleScreen() {
 const styles = StyleSheet.create({
     BibleScreen: {
         flex: 1,
-        backgroundColor: colors.neutral95,
         alignItems: "center",
         justifyContent: "center",
+        backgroundColor: colors.neutral98,
     },
 });

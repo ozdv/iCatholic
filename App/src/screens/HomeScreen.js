@@ -18,7 +18,7 @@ export default function HomeScreen({ navigation }) {
     const welcomeMessage = welcomeMessageFunction(hour);
 
     return (
-        <ScrollView centerContent={true} style={styles.ScrollView}>
+        <ScrollView style={styles.ScrollView}>
             <SafeAreaView style={styles.HomeScreen}>
                 <UserLogo />
                 <Text style={styles.welcomeText}>{welcomeMessage} Cam!</Text>
@@ -36,14 +36,17 @@ export default function HomeScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+    ScrollView: {
+        backgroundColor: colors.neutral98,
+    },
     HomeScreen: {
-        flex: 1,
-        justifyContent: "flex-start",
-        flexDirection: "column",
-        justifyContent: "center",
+        marginTop: 100,
+        // flex: 1,
+        // justifyContent: "flex-start",
+        // flexDirection: "column",
+        // justifyContent: "center",
         alignItems: "center",
     },
-
     welcomeText: {
         color: colors.neutral30,
         margin: 10,
