@@ -1,5 +1,23 @@
 import React, { createContext, useState, useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { collection, getDocs } from "firebase/firestore";
+import { getApps, initializeApp } from "firebase/app";
+
+// ----- FIREBASE CONFIG -----
+const firebaseConfig = {
+    apiKey,
+    authDomain,
+    projectId,
+    storageBucket,
+    messagingSenderId,
+    appId,
+    measurementId,
+};
+
+if (getApps().length === 0) {
+    initializeApp(firebaseConfig);
+}
+const db = getFirestore(initializeApp(firebaseConfig));
 
 const AuthContext = createContext();
 const AuthProvider = (props) => {
@@ -33,5 +51,19 @@ const AuthProvider = (props) => {
         </AuthContext.Provider>
     );
 };
+
+console.log("getApps().length", getApps().length);
+// const users = () => {
+//     const [users, setUsers] = useState([]);
+//     const usersCollectionRef = collection(db, "users");
+//     useEffect(() => {
+//         const getUsers = async () => {
+//             const data = await getDocs(usersCollectionRef);
+//             setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+//         };
+//         getUsers();
+//     }, []);
+//     console.log("users", users);
+// };
 
 export { AuthContext, AuthProvider };
