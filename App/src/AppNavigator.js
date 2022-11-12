@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { StyleSheet } from "react-native";
 import {
     getFocusedRouteNameFromRoute,
@@ -15,8 +15,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import { initializeApp, getApps } from "firebase/app";
-import { getFirestore } from "@firebase/firestore";
-
 import { getAuth, signOut } from "firebase/auth";
 import { AuthContext } from "./AuthProvider";
 import { colors, Icon } from "./constants";
@@ -56,7 +54,12 @@ const firebaseConfig = {
 if (getApps().length === 0) {
     initializeApp(firebaseConfig);
 }
-export const db = getFirestore(initializeApp(firebaseConfig));
+
+function getHeaderTitle(route) {
+    const routeName = getFocusedRouteNameFromRoute(route) ?? "iCatholic";
+    return <Header title={routeName} />;
+}
+const auth = getAuth();
 
 // ----- AUTH -----
 const AuthStack = createNativeStackNavigator();
@@ -77,37 +80,24 @@ const AuthScreens = () => {
     );
 };
 
-// ----- Header -----
-function getHeaderTitle(route) {
-    const routeName = getFocusedRouteNameFromRoute(route) ?? "iCatholic";
-    return <Header title={routeName} />;
-}
-
 // ----- DRAWER -----
 const Drawer = createDrawerNavigator();
 function CustomDrawerContent(props) {
-    const auth = useContext(AuthContext);
-    const user = auth.user;
     return (
         <DrawerContentScrollView {...props}>
             <DrawerItemList {...props} />
-            {/* <DrawerItem label="Daily Mass Readings" onPress={() => {}} />
+            <DrawerItem label="Daily Mass Readings" onPress={() => {}} />
             <DrawerItem
                 label="Prayers"
                 // onPress={navigation.navigate(PrayerListScreen)}
             />
             <DrawerItem label="Holy Bible" onPress={() => {}} />
-            <DrawerItem label="Confession" onPress={() => {}} /> */}
+            <DrawerItem label="Confession" onPress={() => {}} />
             <DrawerItem label="Settings" onPress={() => {}} />
-            {/* <DrawerItem label="Divine Office" onPress={() => {}} /> */}
-            <DrawerItem label="Feedback" onPress={() => {}} />
+            <DrawerItem label="Divine Office" onPress={() => {}} />
+            <DrawerItem label="Submit Feedback" onPress={() => {}} />
             <DrawerItem label="Help" onPress={() => alert("Link to help")} />
-            {user === false && (
-                <DrawerItem label="Sign In" onPress={() => signOut(auth)} />
-            )}
-            {user === true && (
-                <DrawerItem label="Sign Out" onPress={() => signOut(auth)} />
-            )}
+            <DrawerItem label="Sign Out" onPress={() => signOut(auth)} />
         </DrawerContentScrollView>
     );
 }
@@ -141,7 +131,7 @@ function DrawerScreens() {
                 }}
                 headerMode="screen"
             />
-            {/* <Drawer.Screen name="Examen" component={ExamenScreen} /> */}
+            <Drawer.Screen name="Examen" component={ExamenScreen} />
         </Drawer.Navigator>
     );
 }
@@ -289,9 +279,8 @@ export default function AppNavigator() {
     return (
         <NavigationContainer>
             {user === null && <Loading />}
-            {/* {user === false && <AuthScreens />} */}
-            {/* {user === true && <DrawerScreens />} */}
-            <DrawerScreens />
+            {user === false && <AuthScreens />}
+            {user === true && <DrawerScreens />}
             <StatusBar style="auto" />
         </NavigationContainer>
     );
