@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         marginRight: 24,
         marginLeft: 24,
         marginBottom: 24,
-        fontFamily: "Roboto-Light",
-        fontSize: 20,
+        fontFamily: "Roboto-Regular",
+        fontSize: 18,
     },
 });

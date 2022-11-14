@@ -1,7 +1,7 @@
 export default [
     {
         label: "Hail Mary",
-        prayer: "Hail Mary, \nFull of Grace, \nThe Lord is with thee. \nBlessed art thou among women, \nand blessed is the fruit of thy womb, Jesus. \nHoly Mary, \nMother of God, \npray for us sinners now, \nand at the hour of our death.",
+        prayer: "Hail Mary, Full of Grace, \nThe Lord is with thee. \nBlessed art thou among women, \nand blessed is the fruit of thy womb, Jesus. \n\nHoly Mary, \nMother of God, \npray for us sinners now, \nand at the hour of our death.",
     },
     {
         label: "Our Father",
