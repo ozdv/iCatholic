@@ -59,19 +59,12 @@ const styles = StyleSheet.create({
         },
     },
     optionsStyles: {
-        optionTouchable: {
-            underlayColor: "gold",
-            activeOpacity: 70,
-        },
-        optionText: {
-            color: "brown",
+        optionsContainer: {
+            marginTop: 32,
+            marginLeft: -10,
         },
     },
     optionStyles: {
-        optionTouchable: {
-            underlayColor: "red",
-            activeOpacity: 40,
-        },
         optionWrapper: {
             backgroundColor: colors.white,
         },
