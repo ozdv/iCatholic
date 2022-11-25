@@ -5,6 +5,7 @@ import { useFonts } from "expo-font";
 import AppNavigator from "./src/AppNavigator";
 import { AuthProvider } from "./src/AuthProvider";
 import { LogBox } from "react-native";
+import { MenuProvider } from "react-native-popup-menu";
 
 export default function App() {
     // Ignore firebase v9 AsyncStorage warning
@@ -35,7 +36,9 @@ export default function App() {
 
     return (
         <AuthProvider>
-            <AppNavigator />
+            <MenuProvider>
+                <AppNavigator />
+            </MenuProvider>
         </AuthProvider>
     );
 }

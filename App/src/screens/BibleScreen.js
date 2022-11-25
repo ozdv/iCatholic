@@ -6,12 +6,10 @@ import {
     View,
     ScrollView,
 } from "react-native";
-
 import RenderHtml from "react-native-render-html";
 
-import { Button } from "../components";
 import { API_KEY } from "@env";
-
+import { ButtonMenu } from "../components";
 import colors from "../constants/colors";
 
 export default function BibleScreen() {
@@ -19,14 +17,44 @@ export default function BibleScreen() {
 
     const [isLoading, setLoading] = useState(true);
     const [passage, setPassage] = useState([]);
-    const [book, setBook] = useState("Matthew");
+    const [book, setBook] = useState({ id: "MAT", name: "Matthew" });
+    const [books, setBooks] = useState([]);
     const [chapter, setChapter] = useState(1);
-    const [verse, setVerse] = useState(1);
-    console.log("env", API_KEY);
+    const [chapters, setChapters] = useState([]);
 
-    const getScripture = (book, chapter, verse) => {
+    const getBooks = () => {
         fetch(
-            "https://api.scripture.api.bible/v1/bibles/de4e12af7f28f599-01/passages/MAT.28",
+            "https://api.scripture.api.bible/v1/bibles/de4e12af7f28f599-01/books",
+            {
+                headers: { "api-key": API_KEY },
+            }
+        )
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                setBooks(data.data);
+            });
+    };
+
+    const getChapters = (book) => {
+        fetch(
+            `https://api.scripture.api.bible/v1/bibles/de4e12af7f28f599-01/books/${book}/chapters`,
+            {
+                headers: { "api-key": API_KEY },
+            }
+        )
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                setChapters(data.data);
+            });
+    };
+
+    const getScripture = (book, chapter) => {
+        fetch(
+            `https://api.scripture.api.bible/v1/bibles/de4e12af7f28f599-01/passages/${book.id}.${chapter}`,
             {
                 headers: { "api-key": API_KEY },
             }
@@ -37,34 +65,29 @@ export default function BibleScreen() {
             .then((data) => {
                 setPassage({ html: data.data.content });
                 setLoading(false);
-                console.log("data", data.data.content);
             });
     };
 
     useEffect(() => {
-        getScripture();
-    }, []);
+        getBooks();
+        getChapters(book.id);
+        getScripture(book, chapter);
+    }, [book, chapter]);
 
     return (
         <SafeAreaView style={styles.BibleScreen}>
             <View style={styles.BibleHeader}>
-                <Button
-                    onPress={getScripture}
-                    buttonStyle={[styles.Buttons, { flex: 2 }]}
-                    style={{ padding: 5 }}
-                    text={book}
+                <ButtonMenu
+                    onSelect={(book) => setBook(book)}
+                    buttonStyle={[styles.Buttons]}
+                    text={book.name}
+                    items={books.map((book) => book)}
                 />
-                <Button
-                    onPress={() => {}}
-                    buttonStyle={[styles.Buttons, { flex: 1 }]}
-                    style={{ padding: 5 }}
+                <ButtonMenu
+                    onSelect={(number) => setChapter(number.number)}
+                    buttonStyle={[styles.Buttons]}
                     text={chapter}
-                />
-                <Button
-                    onPress={() => {}}
-                    buttonStyle={[styles.Buttons, { flex: 1 }]}
-                    style={{ padding: 5 }}
-                    text={verse}
+                    items={chapters.map((chapter) => chapter)}
                 />
             </View>
             <ScrollView style={styles.Passages}>
@@ -83,15 +106,15 @@ const styles = StyleSheet.create({
     },
     BibleHeader: {
         flexDirection: "row",
-        marginTop: 30,
+        marginTop: 50,
         marginBottom: 10,
         marginLeft: 25,
     },
     Buttons: {
-        marginRight: 25,
+        marginRight: 10,
     },
     Passages: {
-        marginHorizontal: 25,
+        paddingHorizontal: 25,
         fontFamily: "Roboto-Regular",
     },
 });
