@@ -1,3 +1,4 @@
+// https://scripture.api.bible/livedocs
 import React, { useEffect, useState } from "react";
 import {
     StyleSheet,
@@ -86,7 +87,7 @@ export default function BibleScreen() {
                 <ButtonMenu
                     onSelect={(number) => setChapter(number.number)}
                     buttonStyle={[styles.Buttons]}
-                    text={chapter}
+                    text={chapter.toString()}
                     items={chapters.map((chapter) => chapter)}
                 />
             </View>

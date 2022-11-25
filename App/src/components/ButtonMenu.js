@@ -26,6 +26,7 @@ export default function ButtonMenu(props) {
                     <ScrollView style={styles.optionMenu}>
                         {items.map((item) => (
                             <MenuOption
+                                key={item.id}
                                 customStyles={styles.optionStyles}
                                 onSelect={() => onSelect(item)}
                                 text={item.name || item.number}
