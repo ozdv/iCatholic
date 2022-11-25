@@ -75,7 +75,8 @@ export default function LoginScreen() {
             </View>
             <Button
                 onPress={handleSignUp}
-                style={styles.button}
+                buttonStyle={{ width: "80%" }}
+                style={{ padding: 15 }}
                 text="Register"
             />
         </KeyboardAvoidingView>

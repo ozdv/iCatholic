@@ -47,7 +47,12 @@ export default function ForgetPassword() {
                     style={styles.input}
                 />
             </View>
-            <Button onPress={handleForgotPassword} text="Submit" />
+            <Button
+                onPress={handleForgotPassword}
+                text="Submit"
+                style={{ padding: 15 }}
+                buttonStyle={{ width: "80%" }}
+            />
         </KeyboardAvoidingView>
     );
 }

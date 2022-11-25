@@ -53,7 +53,12 @@ export default function LoginScreen() {
                 </Text>
             </View>
 
-            <Button text="Login" onPress={handleLogin} />
+            <Button
+                text="Login"
+                onPress={handleLogin}
+                buttonStyle={{ width: "80%" }}
+                style={{ padding: 15 }}
+            />
 
             <View style={styles.newUser}>
                 <Text style={styles.newUserText}>

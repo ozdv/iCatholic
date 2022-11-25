@@ -3,10 +3,10 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import colors from "../constants/colors";
 
 export default function Button(props) {
-    const { style, disabled, text, onPress } = props;
+    const { style, buttonStyle, disabled, text, onPress } = props;
 
     return (
-        <View style={styles.container}>
+        <View style={[buttonStyle, styles.container]}>
             <TouchableOpacity
                 style={[
                     style,
@@ -33,7 +33,6 @@ export default function Button(props) {
 
 const styles = StyleSheet.create({
     container: {
-        width: "80%",
         justifyContent: "center",
         alignContent: "center",
         marginTop: 20,
@@ -45,7 +44,7 @@ const styles = StyleSheet.create({
     },
     button: {
         width: "100%",
-        padding: 15,
+        // padding: 15,
         borderRadius: 10,
         alignItems: "center",
     },
